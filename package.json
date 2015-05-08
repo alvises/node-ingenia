@@ -1,0 +1,25 @@
+{
+  "name": "node-ingenia",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alvises/node-ingenia.git"
+  },
+  "keywords": [
+    "ingenia",
+    "ai",
+    "wrapper",
+    "node"
+  ],
+  "author": "Alvise Susmel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alvises/node-ingenia/issues"
+  },
+  "homepage": "https://github.com/alvises/node-ingenia"
+}
