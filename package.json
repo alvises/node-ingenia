@@ -21,5 +21,12 @@
   "bugs": {
     "url": "https://github.com/alvises/node-ingenia/issues"
   },
-  "homepage": "https://github.com/alvises/node-ingenia"
+  "homepage": "https://github.com/alvises/node-ingenia",
+  "devDependencies": {
+    "mocha": "^2.2.4",
+    "chai": "^2.3.0"
+  },
+  "dependencies": {
+    "promise": "^7.0.1"
+  }
 }
