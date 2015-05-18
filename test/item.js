@@ -39,7 +39,7 @@ describe('Item',function(){
 		})
 
 
-		it.only('should update the item',function(done){
+		it('should update the item',function(done){
 			//save the first item
 			var item = new Ingenia.item(bundleId);
 			var text = 'hello world '+Math.random();
@@ -67,8 +67,32 @@ describe('Item',function(){
 			}).catch(function(error){
 				console.log(error);
 				done(error);
-			})
+			});
+		});
 
+		it.only('should update initializing the item with id and bundle id',function(done){
+			var item = new Ingenia.item(bundleId);
+			var text = 'hello world '+Math.random();
+			item.save({
+				text: text,
+				tags: ['hello', 'world']
+			}).then(function(createdItem){
+				
+				var newItem = new Ingenia.item(bundleId,createdItem.id);
+				var newMessage = 'new message ' + Math.random();
+				
+				newItem.save({
+					text: newMessage,
+					tag: ['a','b']
+				})
+				.then(function(updatedItem){
+					assert.equal(updatedItem.id,newItem.id);
+					assert.equal(updatedItem.id,createdItem.id);
+					assert.equal(updatedItem.text,newMessage);
+					assert.deepEqual(updatedItem,newItem);
+					done();
+				});
+			});
 		})
 	});
 });
