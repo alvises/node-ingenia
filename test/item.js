@@ -4,7 +4,7 @@ var util = require('util');
 var Ingenia = require('../index');
 
 describe('Item',function(){
-	this.timeout(20000);
+	this.timeout(5000);
 	var bundleId;
 
 	beforeEach(function(done){
@@ -18,7 +18,7 @@ describe('Item',function(){
 
 	describe('#save',function(){
 		
-		it.only('should create an item with custom text',function(done){
+		it('should create an item with custom text',function(done){
 			
 			var item = new Ingenia.item(bundleId);
 			var text = 'hello world '+Math.random();
@@ -39,26 +39,35 @@ describe('Item',function(){
 		})
 
 
-		it('should update the item',function(done){
+		it.only('should update the item',function(done){
 			//save the first item
 			var item = new Ingenia.item(bundleId);
 			var text = 'hello world '+Math.random();
 			var secondText = 'second text '+Math.random();
-
+			
 			item.save({
 				text: text,
 				tags: ['hello', 'world']
 			}).then(function(createdItem){
 				assert.equal(createdItem.text,text);
 				var createdId = createdItem.id;
+				console.log(createdItem);
 				createdItem.save({
 					text: secondText
 				}).then(function(updatedItem){
 					assert.equal(updatedItem.text,secondText);
 					assert.equal(updatedItem.id,createdId);
 					done();
-				});
-			});
+				})
+				.catch(function(error){
+					console.log('ERROR');
+					console.log(error);
+					done(error);
+				})
+			}).catch(function(error){
+				console.log(error);
+				done(error);
+			})
 
 		})
 	});
