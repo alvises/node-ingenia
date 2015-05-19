@@ -1,5 +1,6 @@
 var assert = require('chai').assert;
 var util = require('util');
+var fs = require('fs');
 
 var Ingenia = require('../index');
 
@@ -8,9 +9,7 @@ describe('Item',function(){
 	var bundleId;
 
 	beforeEach(function(done){
-		console.log(Ingenia.endPoint);
-		console.log(Ingenia.apiKey);
-		Ingenia.bundle.get({name: 'Test'}).then(function(bundle){
+		(new Ingenia.bundle()).get({name: 'Test'}).then(function(bundle){
 			bundleId = bundle.id;
 			done();
 		});
@@ -70,7 +69,7 @@ describe('Item',function(){
 			});
 		});
 
-		it.only('should update initializing the item with id and bundle id',function(done){
+		it('should update initializing the item with id and bundle id',function(done){
 			var item = new Ingenia.item(bundleId);
 			var text = 'hello world '+Math.random();
 			item.save({
@@ -92,6 +91,17 @@ describe('Item',function(){
 					assert.deepEqual(updatedItem,newItem);
 					done();
 				});
+			});
+		});
+
+		it.only('should create the item and upload the pdf',function(done){
+			this.timeout(15000);
+			var item = new Ingenia.item(bundleId);
+
+			item.save({},fs.createReadStream('test/fixtures/test.pdf'))
+			.then(function(newItem){
+				assert.isNotNull(newItem.id);
+				done();
 			});
 		})
 	});
