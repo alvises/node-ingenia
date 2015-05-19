@@ -1,5 +1,5 @@
 {
-  "name": "node-ingenia",
+  "name": "ingenia",
   "version": "0.0.1",
   "description": "IngeniaAPI wrapper for Nodejs",
   "main": "index.js",

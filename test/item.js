@@ -21,8 +21,6 @@ describe('Item',function(){
 			
 			var item = new Ingenia.item(bundleId);
 			var text = 'hello world '+Math.random();
-			console.log(text);
-			console.log(item);
 			item.save({
 				text: text,
 				tags: ['hello', 'world','another','tag']
@@ -130,6 +128,32 @@ describe('Item',function(){
 			});
 		});
 
+		describe('#delete',function(){
+			var item;
+			beforeEach(function(done){
+				item = new Ingenia.item(bundleId);
+				var msg = 'message to be deleted ' + Math.random();
+				item.save({
+					text: msg,
+					tags: ['to', 'be', 'deleted']
+				})
+				.then(function(){
+					done();
+				});
+			});
+
+			it.only('should delete the existing item',function(done){
+				item.delete().then(function(deletedItem){
+					assert.equal(deletedItem.id,item.id);
+					done();
+				})
+				.catch(function(error){
+					console.log(error);
+					done(error);
+				});
+			});
+		});
+
 		describe('Summarize',function(){
 			this.timeout(15000);
 			var item;
@@ -142,7 +166,7 @@ describe('Item',function(){
 				});
 			});
 
-			it.only('should have a summarization of the item',function(done){
+			it('should have a summarization of the item',function(done){
 				item.summarize().then(function(result){
 					console.log(result);
 					done();
