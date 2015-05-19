@@ -2,3 +2,4 @@
 node_modules
 test/fixtures/test.pdf
 test.js
+test/fixtures/text.txt

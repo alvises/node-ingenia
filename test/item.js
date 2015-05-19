@@ -94,7 +94,7 @@ describe('Item',function(){
 			});
 		});
 
-		it.only('should create the item and upload the pdf',function(done){
+		it('should create the item and upload the pdf',function(done){
 			this.timeout(15000);
 			var item = new Ingenia.item(bundleId);
 
@@ -105,6 +105,31 @@ describe('Item',function(){
 				assert.isAbove(newItem.text.length,100);
 				done();
 			});
+		});
+
+		it.only('should create an item with large text data',function(done){
+			this.timeout(15000);
+			var item = new Ingenia.item(bundleId);
+			var data = "";
+			var s = fs.createReadStream('test/fixtures/text.txt');
+			s.on('data',function(chunk){
+				data += chunk;
+			})
+			.on('end',function(){
+				item.save({
+					text: data
+				})
+				.then(function(newItem){
+					assert.isNotNull(newItem.id);
+					assert.isNotNull(newItem.text);
+					assert.isAbove(newItem.text.length,100);
+					assert.equal(newItem.text,data);
+					done();
+				});
+
+			});
+
+
 		})
 	});
 });
