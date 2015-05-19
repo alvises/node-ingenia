@@ -101,6 +101,8 @@ describe('Item',function(){
 			item.save({},fs.createReadStream('test/fixtures/test.pdf'))
 			.then(function(newItem){
 				assert.isNotNull(newItem.id);
+				assert.isNotNull(newItem.text);
+				assert.isAbove(newItem.text.length,100);
 				done();
 			});
 		})
